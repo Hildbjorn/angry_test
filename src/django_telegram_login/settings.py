@@ -99,6 +99,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Использование класса Profile для модели пользователя
 AUTH_USER_MODEL = 'users.UserProfile'
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Стандартный бэкенд
+    'users.authentication_backend.TelegramAuthBackend',  # Ваш кастомный бэкенд
+]
+
 # Перенаправление на домашний URL после входа
 LOGIN_REDIRECT_URL = '/'
 

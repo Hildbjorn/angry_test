@@ -11,8 +11,8 @@
 {% endblock %}
 
 {% block content %}
-  <section class="my-5">
-    <div class="container p-3">
+  <section>
+    <div class="container mx-auto my-auto p-3">
       {% if user.is_authenticated %}
         <h1 class="mb-5">{{ user.username }}, добрый день!</h1>
       {% else %}

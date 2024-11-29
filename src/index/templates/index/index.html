@@ -1,0 +1,24 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+
+<!-- META TAGS -->
+{% block meta_tags %}
+  {% include 'layout/components/meta_tags.html' %}
+{% endblock %}
+
+{% block content %}
+  <section class="my-5">
+    <div class="container p-3">
+      {% if user.is_authenticated %}
+        <h1 class="mb-5">{{ user.username }}, добрый день!</h1>
+      {% else %}
+        <h1 class="mb-5">Добрый день!</h1>
+      {% endif %}
+      <a href="#" class="btn btn-lg btn-primary">Войти через Telegram</a>
+    </div>
+  </section>
+{% endblock %}

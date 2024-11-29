@@ -7,7 +7,7 @@ from .views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('index.urls')),
-    # path('account/', include('users.urls')),
+    path('account/', include('users.urls')),
 ]
 
 handler404 = "django_telegram_login.views.page_not_found_view"

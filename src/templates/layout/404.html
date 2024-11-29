@@ -1,0 +1,27 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+
+{% block title %}
+  Страница не существует
+{% endblock %}
+
+{% block content %}
+  <!-- Контент страницы -->
+  <div class="container w-auto my-auto p-3 p-lg-4">
+    <h2 class="text-center text-primary">Страница не&nbsp;существует</h2>
+    <div class="text-center mt-5">
+      <div class="mt-5">
+        <img class="img-fluid w-50" src="{% static 'img/elements/logo.webp' %}" alt="Страница не существует" />
+      </div>
+      <div class="text-center text-primary mt-3">
+        <h1 class="text-center text-danger text-big fw-bold">4 0 4</h1>
+      </div>
+      <div class="mt-5">
+        <p>
+          <h2 class="text-center text-primary big-text">Попробуйте уточнить запрос</h2>
+        </p>
+      </div>
+    </div>
+  </div>
+  <!-- *********** -->
+{% endblock %}

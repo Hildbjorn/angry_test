@@ -13,6 +13,11 @@
 {% block content %}
   <section>
     <div class="container text-center">
+      <div class="row justify-content-center mb-4">
+        <div class="col-12 col-md-4">
+          <img src="{% static 'img/elements/angry_logo.webp' %}" class="image-fluid rounded-circle" alt="logo" />
+        </div>
+      </div>
       {% if user.is_authenticated %}
         <h1 class="mb-5">{{ user.username }}, добрый день!</h1>
       {% else %}

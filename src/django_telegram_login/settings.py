@@ -97,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Использование класса Profile для модели пользователя
-# AUTH_USER_MODEL = 'users.Profile'
+AUTH_USER_MODEL = 'users.UserProfile'
 
 # Перенаправление на домашний URL после входа
 LOGIN_REDIRECT_URL = '/'

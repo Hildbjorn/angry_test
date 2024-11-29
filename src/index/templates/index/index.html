@@ -12,7 +12,7 @@
 
 {% block content %}
   <section>
-    <div class="container mx-auto my-auto p-3">
+    <div class="container text-center">
       {% if user.is_authenticated %}
         <h1 class="mb-5">{{ user.username }}, добрый день!</h1>
       {% else %}

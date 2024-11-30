@@ -1,14 +1,15 @@
+import asyncio
+import threading
 import os
 import signal
 import sys
-import asyncio
 from django.conf import settings
+from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.utils import timezone
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackContext
-from django.apps import apps
+from .models import UserProfile
 
 # Путь к файлу состояния бота в папке приложения
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -16,10 +17,6 @@ BOT_STATE_FILE = os.path.join(APP_DIR, 'bot_state.txt')
 
 # Команда /start
 async def start(update: Update, context: CallbackContext):
-    # Ожидаем, что приложения уже загружены к моменту вызова этой функции
-    UserProfile = apps.get_model('auth_telegram', 'UserProfile')  # Динамически загружаем модель
-    User = apps.get_model('auth', 'User')  # Динамически загружаем модель User
-
     user_telegram_id = str(update.message.from_user.id)
     user_telegram_username = update.message.from_user.username
 

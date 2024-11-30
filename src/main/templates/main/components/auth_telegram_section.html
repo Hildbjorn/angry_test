@@ -8,9 +8,9 @@
       </div>
     </div>
     {% if user.is_authenticated %}
-      <h1 class="mb-5">{{ user.telegram_username }}, добрый день!</h1>
+      <h1 class="mb-5">{{ user.telegram_username }}, сердитый день!</h1>
     {% else %}
-      <h1 class="mb-5">Добрый день!</h1>
+      <h1 class="mb-5">Сердитый день!</h1>
       <a href="{% url 'start_bot' %}" target="_blank" class="btn btn-lg btn-primary">Войти через Telegram</a>
     {% endif %}
   </div>

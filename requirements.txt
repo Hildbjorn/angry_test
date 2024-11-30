@@ -15,6 +15,7 @@ httpx==0.28.0
 idna==3.10
 kombu==5.4.2
 prompt_toolkit==3.0.48
+psutil==6.1.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 python-telegram-bot==21.7

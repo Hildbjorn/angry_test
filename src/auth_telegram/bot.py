@@ -1,20 +1,46 @@
-import asyncio
-import threading
 import os
 import signal
 import sys
+import asyncio
 from django.conf import settings
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.utils import timezone
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler
+from telegram.ext import ApplicationBuilder, CommandHandler, CallbackContext
+from django.apps import apps
 
 # Путь к файлу состояния бота в папке приложения
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
 BOT_STATE_FILE = os.path.join(APP_DIR, 'bot_state.txt')
 
 # Команда /start
-async def start(update: Update, context):
-    await update.message.reply_text("Привет! Я Telegram-бот.")
+async def start(update: Update, context: CallbackContext):
+    # Ожидаем, что приложения уже загружены к моменту вызова этой функции
+    UserProfile = apps.get_model('auth_telegram', 'UserProfile')  # Динамически загружаем модель
+    User = apps.get_model('auth', 'User')  # Динамически загружаем модель User
+
+    user_telegram_id = str(update.message.from_user.id)
+    user_telegram_username = update.message.from_user.username
+
+    # Пытаемся найти пользователя в базе данных по telegram_id
+    try:
+        user_profile = UserProfile.objects.get(telegram_id=user_telegram_id)
+        user = user_profile.user
+        await update.message.reply_text(f"Привет, {user.username}! Ты уже зарегистрирован в системе.")
+
+        # Аутентификация пользователя
+        login(update, user)
+        await update.message.reply_text("Ты успешно аутентифицирован в системе.")
+
+    except UserProfile.DoesNotExist:
+        # Если пользователя нет, создаем нового
+        user = User.objects.create_user(username=user_telegram_id, password=user_telegram_id)
+        UserProfile.objects.create(user=user, telegram_id=user_telegram_id, telegram_username=user_telegram_username)
+
+        # Аутентификация нового пользователя
+        login(update, user)
+        await update.message.reply_text(f"Добро пожаловать, {user.username}! Ты был зарегистрирован в системе.")
 
 # Функция для завершения работы бота (удаление файла состояния)
 def stop_bot():
@@ -57,7 +83,7 @@ def run_bot():
 
 # Обработчик завершения работы сервера Django
 def handle_shutdown_signal(signal, frame):
-    print("Завершение работы сервера Django... удаление файла состояния бота.")
+    print("Завершение работы сервера Django... Остановка бота.")
     stop_bot()
     sys.exit(0)
 

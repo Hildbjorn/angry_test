@@ -1,6 +1,7 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from .views import *
 
 urlpatterns = [
-    # path('start-bot/', start_telegram_bot, name='start_bot'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]

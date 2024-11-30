@@ -98,6 +98,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Перенаправление на домашний URL после входа
 LOGIN_REDIRECT_URL = '/'
+# Перенаправление на домашний URL после выхода
+LOGOUT_REDIRECT_URL = '/'
 
 # Настройки интернационализации
 LANGUAGE_CODE = 'ru-RU'

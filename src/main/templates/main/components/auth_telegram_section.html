@@ -7,8 +7,18 @@
         <img src="{% static 'img/elements/angry_logo.webp' %}" class="image-fluid rounded-circle" alt="logo" />
       </div>
     </div>
-    {% if user.is_authenticated %}
-      <h1 class="mb-5">{{ user.telegram_username }}, сердитый день!</h1>
+    {% if user.is_authenticated and user.is_superuser %}
+      <h1 class="mb-5">{{ user }}, сердитый день!</h1>
+      <form id="logout-form" method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="btn btn-lg btn-secondary" type="submit">Выход</button>
+      </form>
+    {% elif user.is_authenticated %}
+      <h1 class="mb-5">{{ user.profile.telegram_username }}, сердитый день!</h1>
+      <form id="logout-form" method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="btn btn-lg btn-secondary" type="submit">Выход</button>
+      </form>
     {% else %}
       <h1 class="mb-5">Сердитый день!</h1>
       <a href="https://t.me/django_telegram_login_test_bot" target="_blank" class="btn btn-lg btn-primary">Войти через Telegram</a>

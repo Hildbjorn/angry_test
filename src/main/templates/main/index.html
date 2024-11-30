@@ -1,0 +1,15 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+
+<!-- META TAGS -->
+{% block meta_tags %}
+  {% include 'layout/components/meta_tags.html' %}
+{% endblock %}
+
+{% block content %}
+  {% include 'main/components/auth_telegram_section.html' %}
+{% endblock %}

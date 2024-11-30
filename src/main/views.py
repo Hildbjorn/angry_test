@@ -6,4 +6,4 @@ __all__ = (
 )
 
 class IndexPageView(TemplateView):
-    template_name = 'index/index.html'
+    template_name = 'main/index.html'

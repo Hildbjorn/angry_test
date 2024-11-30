@@ -2,9 +2,6 @@ __all__ = (
     'page_not_found_view',
 )
 
-import os
-from django.conf import settings
-from django.http import FileResponse
 from django.shortcuts import render
 
 

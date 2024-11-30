@@ -31,8 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'index',
-    'users',
+    'main',
+    'auth_telegram',
 ]
 
 # Промежуточное ПО
@@ -94,14 +94,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-]
-
-# Использование класса Profile для модели пользователя
-AUTH_USER_MODEL = 'users.UserProfile'
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',  # Стандартный бэкенд
-    'users.authentication_backend.TelegramAuthBackend',  # Ваш кастомный бэкенд
 ]
 
 # Перенаправление на домашний URL после входа

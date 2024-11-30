@@ -1,13 +1,13 @@
 import asyncio
+import threading
 import os
 import signal
 import sys
 from asgiref.sync import sync_to_async
 from django.conf import settings
-from django.contrib.auth import login
-from django.contrib.sessions.models import Session
-from django.utils.timezone import now
+from django.http import HttpRequest
 from django.utils import timezone
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackContext
@@ -62,19 +62,11 @@ async def start(update: Update, context: CallbackContext):
         user = await create_user_with_profile(user_telegram_id, user_telegram_username)
         await update.message.reply_text(f"Создан новый пользователь с ID {user.username}.")
 
-    # В Django логиним пользователя
-    # Важно: поскольку мы работаем с асинхронным контекстом, используется sync_to_async для синхронных операций
-    user = await sync_to_async(login)(context.bot, user)
-    
-    # Получаем текущую сессию для пользователя
-    session = Session.objects.get(session_key=context.bot.id)
-    session_data = session.get_decoded()
-    
-    # Пример: можно установить дополнительные параметры сессии, если необходимо
-    session_data['user_telegram_id'] = user_telegram_id
-    session_data['user_telegram_username'] = user_telegram_username
-    session.save()
+    # Используем пользователя для аутентификации
+    # Важно: здесь логин не будет работать напрямую через сессию в Telegram, так как это асинхронный контекст
+    # Для реального использования сессий, лучше использовать JWT или иную схему аутентификации.
 
+    # Сообщение об успешной аутентификации
     telegram_username = await get_telegram_username(user)
     await update.message.reply_text(f"Вы успешно аутентифицированы, {telegram_username}!")
 

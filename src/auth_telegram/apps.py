@@ -1,6 +1,5 @@
 import threading
 from django.apps import AppConfig
-from .bot import run_bot
 
 class AuthTelegramConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
@@ -8,6 +7,7 @@ class AuthTelegramConfig(AppConfig):
     verbose_name = 'Telegram пользователей'
 
     def ready(self):
+        from .bot import run_bot
         # Запускаем бота только при старте Django
         if not hasattr(self, 'bot_started'):  # Проверяем, был ли уже запущен бот
             self.bot_started = True
